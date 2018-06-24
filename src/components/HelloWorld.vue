@@ -1,113 +1,72 @@
 <template>
-  <div class="hello">
+  <div class="hello" id="hello">
     <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
-    <ul>
-      <li>
-        <a
-          href="https://vuejs.org"
-          target="_blank"
-        >
-          Core Docs
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://forum.vuejs.org"
-          target="_blank"
-        >
-          Forum
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://chat.vuejs.org"
-          target="_blank"
-        >
-          Community Chat
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://twitter.com/vuejs"
-          target="_blank"
-        >
-          Twitter
-        </a>
-      </li>
-      <br>
-      <li>
-        <a
-          href="http://vuejs-templates.github.io/webpack/"
-          target="_blank"
-        >
-          Docs for This Template
-        </a>
-      </li>
-    </ul>
-    <h2>Ecosystem</h2>
-    <ul>
-      <li>
-        <a
-          href="http://router.vuejs.org/"
-          target="_blank"
-        >
-          vue-router
-        </a>
-      </li>
-      <li>
-        <a
-          href="http://vuex.vuejs.org/"
-          target="_blank"
-        >
-          vuex
-        </a>
-      </li>
-      <li>
-        <a
-          href="http://vue-loader.vuejs.org/"
-          target="_blank"
-        >
-          vue-loader
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/awesome-vue"
-          target="_blank"
-        >
-          awesome-vue
-        </a>
-      </li>
-    </ul>
+    <!--<count-down :endTime="endTime" :callback="callback" endText="已经结束了"></count-down>-->
+    <!--<div>-->
+      <!--<div class="time-clock">-->
+        <!--<span class="num" :style="note"></span>-->
+        <!--<span class="num" :style="note"></span>-->
+        <!--<span>:</span>-->
+        <!--<span class="num" :style="note"></span>-->
+        <!--<span class="num" :style="note"></span>-->
+      <!--</div>-->
+    <!--</div>-->
   </div>
 </template>
-
 <script>
-export default {
-  name: 'HelloWorld',
-  data () {
-    return {
-      msg: 'Welcome to Your Vue.js App'
+  import img from '../assets/nums.png'
+  import CountDown from '../components/common/count-down.vue'
+  import {dateUtil} from '../util/dateUtil'
+
+  export default {
+    name: 'HelloWorld',
+    data() {
+      return {
+        msg: '你好,陈思,很高兴认识你',
+        note: {
+          backgroundImage: "url(" + img + ")",
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "0px 0px",
+        },
+        callback: {},
+        endTime: ''
+      }
+    },
+    components: {
+      'count-down': CountDown
+    },
+    mounted() {
+      this.renderData()
+    },
+    methods: {
+      renderData() {
+        let self = this
+        self.endTime = dateUtil.addDate(new Date(), 'd', 1).getTime()
+        setInterval(() => {
+          console.log(new Date().getHours())
+        }, 1000)
+      }
     }
   }
-}
 </script>
-
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
-  font-weight: normal;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
+  .time-clock {
+    display: inline-block;
+    margin: 0 auto;
+  }
+
+  .time-clock span {
+    display: inline-block;
+    border: 1px solid #ccc;
+    width: 21px;
+    height: 26px;
+    text-align: center;
+    line-height: 26px;
+    float: left;
+    transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+  }
 </style>
